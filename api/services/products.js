@@ -4,11 +4,11 @@ const store = require("../store/products");
 
 class ProductService {
   constructor() {
-    this.size = [
-      { name: "small", size: 100 },
-      { name: "medium", size: 500 },
-      { name: "large", size: 1000 },
-    ];
+    // this.size = [
+    //   { name: "small", size: 100 },
+    //   { name: "medium", size: 500 },
+    //   { name: "large", size: 1000 },
+    // ];
 
     // this.helperImg = (filePath, fileName, size = 300) => {
     //   return sharp(filePath)
