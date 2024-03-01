@@ -12,6 +12,7 @@ const mySchema = new Schema({
     large: { type: String, requeried: false },
     original: { type: String, requeried: false },
   },
+  category: { type: String, requeried: true },
   price: { type: Number, requeried: true },
   quantity: { type: Number, requeried: true },
 });
