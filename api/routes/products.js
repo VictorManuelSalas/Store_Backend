@@ -43,10 +43,10 @@ router.get("/imagen/:imgName", (req, res) => {
   const imgName = req.params.imgName; 
   imgName.includes("-")
     ? res.send(
-        `<img src="http://localhost:3001/api/v1/products/optimize/${imgName}" alt="${imgName}">`
+        `<img src="https://store-backend-3his.onrender.com/api/v1/products/optimize/${imgName}" alt="${imgName}">`
       )
     : res.send(
-        `<img src="http://localhost:3001/api/v1/products/upload/${imgName}" alt="${imgName}">`
+        `<img src="https://store-backend-3his.onrender.com/api/v1/products/upload/${imgName}" alt="${imgName}">`
       );
 });
 
