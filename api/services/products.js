@@ -1,5 +1,5 @@
 const multer = require("multer");
-const sharp = require("sharp");
+// const sharp = require("sharp");
 const store = require("../store/products");
 
 class ProductService {
@@ -10,11 +10,11 @@ class ProductService {
       { name: "large", size: 1000 },
     ];
 
-    this.helperImg = (filePath, fileName, size = 300) => {
-      return sharp(filePath)
-        .resize(size)
-        .toFile(`./assets/optimize/${fileName}`);
-    };
+    // this.helperImg = (filePath, fileName, size = 300) => {
+    //   return sharp(filePath)
+    //     .resize(size)
+    //     .toFile(`./assets/optimize/${fileName}`);
+    // };
 
     this.storage = multer.diskStorage({
       destination: (req, file, cb) => {
@@ -48,14 +48,14 @@ class ProductService {
         //   throw new Error("Datos faltantes");
         return "Datos Faltantes";
       }
-      const reduceImg = await this.proccesImg(img);
-      if (reduceImg !== "success") {
-        throw new Error("Error en la conversion de imagenes");
-      }
+      // const reduceImg = await this.proccesImg(img);
+      // if (reduceImg !== "success") {
+      //   throw new Error("Error en la conversion de imagenes");
+      // }
       data.imagen = {
-        small: `http://localhost:3001/api/v1/products/imagen/small-${img?.filename}`,
-        medium: `http://localhost:3001/api/v1/products/imagen/medium-${img?.filename}`,
-        large: `http://localhost:3001/api/v1/products/imagen/large-${img?.filename}`,
+        // small: `http://localhost:3001/api/v1/products/imagen/small-${img?.filename}`,
+        // medium: `http://localhost:3001/api/v1/products/imagen/medium-${img?.filename}`,
+        // large: `http://localhost:3001/api/v1/products/imagen/large-${img?.filename}`,
         original: `http://localhost:3001/api/v1/products/imagen/${img?.filename}`,
       };
 
@@ -65,21 +65,21 @@ class ProductService {
     }
   }
 
-  async proccesImg(img) {
-    try {
-      this.size.forEach(async (element) => {
-        await this.helperImg(
-          img.path,
-          `${element.name}-${img.filename}`,
-          element.size
-        );
-      });
-      return "success";
-    } catch (error) {
-      console.error(error);
-      return "error";
-    }
-  }
+  // async proccesImg(img) {
+  //   try {
+  //     this.size.forEach(async (element) => {
+  //       await this.helperImg(
+  //         img.path,
+  //         `${element.name}-${img.filename}`,
+  //         element.size
+  //       );
+  //     });
+  //     return "success";
+  //   } catch (error) {
+  //     console.error(error);
+  //     return "error";
+  //   }
+  // }
 }
 
 module.exports = ProductService;
