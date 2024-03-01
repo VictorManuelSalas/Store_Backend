@@ -56,7 +56,7 @@ class ProductService {
         // small: `http://localhost:3001/api/v1/products/imagen/small-${img?.filename}`,
         // medium: `http://localhost:3001/api/v1/products/imagen/medium-${img?.filename}`,
         // large: `http://localhost:3001/api/v1/products/imagen/large-${img?.filename}`,
-        original: `http://localhost:3001/api/v1/products/imagen/${img?.filename}`,
+        original: `https://store-backend-3his.onrender.com/api/v1/products/imagen/${img?.filename}`,
       };
 
       return store.add(data);
