@@ -1,11 +1,16 @@
- const store = require("../store/products");
+const store = require("../store/products");
 
 class ProductService {
   constructor() {}
 
   async addProduct(data, img) {
     try {
-      if (data.name == null) {
+      if (
+        data.name == "" ||
+        data.description == "" ||
+        data.price == "" ||
+        data.category == ""
+      ) {
         return "Datos Faltantes";
       }
       // const reduceImg = await this.proccesImg(img);
@@ -26,24 +31,37 @@ class ProductService {
   }
 
   async getProducts() {
-    return await store.getAll();
+    try {
+      return await store.getAll();
+    } catch (error) {
+      return error;
+    }
   }
 
-  // async proccesImg(img) {
-  //   try {
-  //     this.size.forEach(async (element) => {
-  //       await this.helperImg(
-  //         img.path,
-  //         `${element.name}-${img.filename}`,
-  //         element.size
-  //       );
-  //     });
-  //     return "success";
-  //   } catch (error) {
-  //     console.error(error);
-  //     return "error";
-  //   }
-  // }
+  async getProduct(id) {
+    try {
+      const product = await store.getById(id);
+      return product;
+    } catch (error) {
+      return error;
+    }
+  }
+
+  async deleteProduct(id) {
+    try {
+      return await store.delete(id);
+    } catch (error) {
+      return error ;
+    }
+  }
+
+  async updateProduct(id,data){
+    try {
+      return await store.update(id,data)
+    } catch (error) {
+      return error
+    }
+  }
 }
 
 module.exports = ProductService;

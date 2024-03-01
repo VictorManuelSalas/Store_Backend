@@ -24,4 +24,27 @@ router.post("/", uploadProduct.single("file"), async (req, res) => {
   res.send({ response: `New Product Added`, product });
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const product = await service.getProduct(id);
+  res.send({
+    response: product.name.includes("CastError")
+      ? "Product not exist"
+      : product,
+  });
+});
+
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const deleteProcess = await service.deleteProduct(id);
+  res.send({ deleteProcess });
+});
+
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const updateProduct = await service.updateProduct(id, data);
+  res.send({ updateProduct });
+});
+
 module.exports = router;
