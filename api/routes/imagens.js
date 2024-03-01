@@ -24,7 +24,7 @@ router.post("/newImgClient", uploadClient.single("file"), async (req, res) => {
     const img = req.file;
     res.send({
       imgUrl: img?.filename
-        ? `https://store-backend-3his.onrender.com/api/v1/products/imagen/${img?.filename}`
+        ? `https://store-backend-3his.onrender.com/api/v1/imagen/${img?.filename}`
         : "Error",
     });
   } catch (error) {
@@ -46,10 +46,10 @@ router.get("/imagen/:imgName", (req, res) => {
   const imgName = req.params.imgName;
   imgName.includes("-")
     ? res.send(
-        `<img src="https://store-backend-3his.onrender.com/api/v1/products/clientImg/${imgName}" alt="${imgName}">`
+        `<img src="https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${imgName}" alt="${imgName}">`
       )
     : res.send(
-        `<img src="https://store-backend-3his.onrender.com/api/v1/products/upload/${imgName}" alt="${imgName}">`
+        `<img src="https://store-backend-3his.onrender.com/api/v1/imagen/upload/${imgName}" alt="${imgName}">`
       );
 });
 
