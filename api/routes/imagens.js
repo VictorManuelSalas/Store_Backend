@@ -42,7 +42,7 @@ router.use(
   express.static(path.join(__dirname, "../../assets", "clientImg"))
 );
 
-router.get("/imagen/:imgName", (req, res) => {
+router.get("/:imgName", (req, res) => {
   const imgName = req.params.imgName;
   imgName.includes("-")
     ? res.send(
