@@ -1,0 +1,19 @@
+{
+  "name": "store_backend",
+  "version": "1.0.0",
+  "description": "backend to the store of bags",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorManuelSalas/Store_Backend.git"
+  },
+  "author": "Victor Manuel Nuñez Salas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorManuelSalas/Store_Backend/issues"
+  },
+  "homepage": "https://github.com/VictorManuelSalas/Store_Backend#readme"
+}
