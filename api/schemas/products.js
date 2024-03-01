@@ -16,6 +16,6 @@ const mySchema = new Schema({
   quantity: { type: Number, requeried: true },
 });
 
-const model = mongoos.model("Products", mySchema); //nombre de la tabla , estructura de la tabla
+const model = mongoos.model("products", mySchema); //nombre de la tabla , estructura de la tabla
 
 module.exports = model;

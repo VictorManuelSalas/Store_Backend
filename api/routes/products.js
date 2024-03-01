@@ -18,17 +18,17 @@ const upload = multer({
 
 //Schemas
 
-router.get("/", (req, res, next) => {
-  res.status(200).send("Hola");
+router.get("/", async (req, res) => {
+  const products = await service.getProducts();
+  res.status(200).send({products});
 });
 
 router.post("/", upload.single("file"), async (req, res) => {
   const data = req.body;
   const img = req.file;
   const product = await service.addProduct(data, img);
-  res.send({ data, product });
+  res.send({ response: `New Product Added`, product });
 });
-
 
 //Img Viewer
 router.use(
@@ -40,7 +40,7 @@ router.use(
   express.static(path.join(__dirname, "../../assets", "optimize"))
 );
 router.get("/imagen/:imgName", (req, res) => {
-  const imgName = req.params.imgName; 
+  const imgName = req.params.imgName;
   imgName.includes("-")
     ? res.send(
         `<img src="https://store-backend-3his.onrender.com/api/v1/products/optimize/${imgName}" alt="${imgName}">`

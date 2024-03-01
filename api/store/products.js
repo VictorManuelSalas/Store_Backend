@@ -2,9 +2,15 @@
 
 const Model = require("../schemas/products");
 
-function addProduct(product) {
-  const newProduct = new Model(product);
+async function addProduct(product) {
+  const newProduct = await new Model(product);
   return newProduct.save();
 }
 
-module.exports = { add: addProduct };
+async function getProducts() {
+  const products = await Model.find();
+  console.log(products)
+  return products;
+}
+
+module.exports = { add: addProduct, getAll: getProducts };

@@ -45,7 +45,6 @@ class ProductService {
   async addProduct(data, img) {
     try {
       if (data.name == null) {
-        //   throw new Error("Datos faltantes");
         return "Datos Faltantes";
       }
       // const reduceImg = await this.proccesImg(img);
@@ -53,9 +52,9 @@ class ProductService {
       //   throw new Error("Error en la conversion de imagenes");
       // }
       data.imagen = {
-        // small: `http://localhost:3001/api/v1/products/imagen/small-${img?.filename}`,
-        // medium: `http://localhost:3001/api/v1/products/imagen/medium-${img?.filename}`,
-        // large: `http://localhost:3001/api/v1/products/imagen/large-${img?.filename}`,
+        small: 'Not available',//`http://localhost:3001/api/v1/products/imagen/small-${img?.filename}` 
+        medium:  'Not available',
+        large:  'Not available',
         original: `https://store-backend-3his.onrender.com/api/v1/products/imagen/${img?.filename}`,
       };
 
@@ -63,6 +62,11 @@ class ProductService {
     } catch (error) {
       return error;
     }
+  }
+
+
+  async getProducts(){
+    return await store.getAll()
   }
 
   // async proccesImg(img) {
