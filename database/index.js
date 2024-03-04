@@ -7,7 +7,7 @@ async function connect(url){
     await db.connect(url, {
         useNewUrlParser:true
     })
-    console.log('[db] Connected sucess')
+    console.log('[Mongo Data Base] Connected sucesfully')
 }
 
 

@@ -36,10 +36,12 @@ async function deleteProduct(id) {
 }
 
 async function updateProduct(id, data) {
-  const foundUser = await Model.findOne({ _id: id });
-  foundUser.name = data.name;
-  const response = await foundUser.save();
-  return response;
+  const updateProduct = await Model.updateOne({ _id: id }, { $set: data });
+  if (updateProduct) {
+    return updateProduct;
+  } else {
+    return "Product not exist";
+  }
 }
 
 module.exports = {
