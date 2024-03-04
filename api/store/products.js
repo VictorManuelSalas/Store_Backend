@@ -14,13 +14,17 @@ async function getProducts() {
 }
 
 async function getProductId(id) {
-  const product = await Model.findById(id);
-  return product;
+  const product = await Model.findOne({ _id: id });
+  if (product) {
+    return await product;
+  } else {
+    return "Product not exist";
+  }
 }
 
 async function deleteProduct(id) {
   try {
-    const product = await Model.findById(id);
+    const product = await Model.findOne({ _id: id });
     if (product) {
       return await Model.deleteOne({ _id: id });
     } else {
@@ -32,10 +36,10 @@ async function deleteProduct(id) {
 }
 
 async function updateProduct(id, data) {
-  const foundUser = await Model.findOne({ _id: id })
-  foundUser.name = data.name
-  const response = await foundUser.save()
-  return response
+  const foundUser = await Model.findOne({ _id: id });
+  foundUser.name = data.name;
+  const response = await foundUser.save();
+  return response;
 }
 
 module.exports = {
