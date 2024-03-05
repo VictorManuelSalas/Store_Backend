@@ -16,7 +16,7 @@ class ClientService {
   }
 
   async addClient(data, photo) {
-    try { 
+    try {
       if (
         data.name == "" ||
         data.lastname == "" ||
@@ -28,10 +28,24 @@ class ClientService {
       }
 
       data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/${photo?.filename}`;
-
       return store.add(data);
     } catch (error) {
       return error;
+    }
+  }
+
+  async updateClient(id, data) {
+    try {
+      return await store.update(id, data);
+    } catch (error) {
+      return error;
+    }
+  }
+  async deleteContact(id) {
+    try {
+      return await store.delete(id);
+    } catch (error) {
+      return error ;
     }
   }
 }

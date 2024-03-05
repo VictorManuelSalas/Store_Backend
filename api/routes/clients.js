@@ -4,6 +4,8 @@ const router = express.Router();
 //servcie
 const ClientService = require("../services/clients");
 const service = new ClientService();
+const ImageService = require("../services/imagens");
+const img_service = new ImageService();
 
 const { uploadClient } = require("./imagens");
 
@@ -28,22 +30,25 @@ router.post("/", uploadClient.single("photo"), async (req, res) => {
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
-  const response = await service.getClient(id);
-  res.send({ response });
+  const client = await service.getClient(id);
+  res.send({ client });
 });
 
-// router.delete("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const deleteProcess = await service.deleteProduct(id);
-//   const imgStatus = deleteProcess !== "object" ? await img_service.deleteImg(deleteProcess?.img) : "";
-//   res.send({ deleteProcess, imgStatus});
-// });
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  const deleteProcess = await service.deleteContact(id);
+  const imgStatus =
+    deleteProcess !== "object"
+      ? await img_service.deleteImg(deleteProcess?.photo)
+      : "";
+  res.send({ deleteProcess, imgStatus });
+});
 
-// router.put("/:id", async (req, res) => {
-//   const { id } = req.params;
-//   const data = req.body;
-//   const updateProduct = await service.updateProduct(id, data);
-//   res.send({ updateProduct });
-// });
+router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const data = req.body;
+  const updateClient = await service.updateClient(id, data);
+  res.send({ updateClient });
+});
 
 module.exports = router;
