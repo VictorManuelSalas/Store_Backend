@@ -63,4 +63,4 @@ router.post("/", async (req, res) => {
   const response = await service.deleteImg(img);
   res.send({ response });
 });
-module.exports = { imagens: router, uploadProduct };
+module.exports = { imagens: router, uploadProduct, uploadClient };

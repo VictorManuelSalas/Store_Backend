@@ -53,7 +53,7 @@ class ImageService {
     });
   }
 
-  deleteImg(img) {
+  async deleteImg(img) {
     try {
       const image = img.split("/");
       const folder = image[image.length - 1].includes("client")
@@ -65,7 +65,7 @@ class ImageService {
         image[image.length - 1]
       );
       if (fs.existsSync(fileDir)) {
-        fs.unlinkSync(fileDir);
+        await fs.unlinkSync(fileDir);
 
         return `Image ${image[image.length - 1]} was deleted successfully.`;
       } else {
