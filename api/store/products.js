@@ -25,8 +25,10 @@ async function getProductId(id) {
 async function deleteProduct(id) {
   try {
     const product = await Model.findOne({ _id: id });
+     
     if (product) {
-      return await Model.deleteOne({ _id: id });
+      const process = await Model.deleteOne({ _id: id })
+      return await {process, img: product?.imagen?.original};
     } else {
       return "Product not exist";
     }

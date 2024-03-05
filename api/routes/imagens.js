@@ -42,6 +42,11 @@ router.use(
   express.static(path.join(__dirname, "../../assets", "clientImg"))
 );
 
+router.get("/", async (req, res) => {
+  const response = await service.getAllImgServer(); 
+  res.send({ response });
+});
+
 router.get("/:imgName", (req, res) => {
   const imgName = req.params.imgName;
   imgName.includes("-")
@@ -53,4 +58,9 @@ router.get("/:imgName", (req, res) => {
       );
 });
 
+router.post("/", async (req, res) => {
+  const { img } = req.body;
+  const response = await service.deleteImg(img);
+  res.send({ response });
+});
 module.exports = { imagens: router, uploadProduct };

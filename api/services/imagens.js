@@ -1,5 +1,6 @@
 const multer = require("multer");
-// const sharp = require("sharp");
+const fs = require("fs");
+const path = require("path");
 
 class ImageService {
   constructor() {
@@ -50,6 +51,50 @@ class ImageService {
         cb(null, `client-${Date.now()}.${ext}`); //cb obtiene el data y genera el doc nombrandolo
       },
     });
+  }
+
+  deleteImg(img) {
+    try {
+      const image = img.split("/");
+      const folder = image[image.length - 1].includes("client")
+        ? "clientImg"
+        : "upload";
+      const fileDir = path.join(
+        __dirname,
+        `../../assets/${folder}`,
+        image[image.length - 1]
+      );
+      if (fs.existsSync(fileDir)) {
+        fs.unlinkSync(fileDir);
+
+        return `Image ${image[image.length - 1]} was deleted successfully.`;
+      } else {
+        return `Any Image with the name ${
+          image[image.length - 1]
+        }, was not found.`;
+      }
+    } catch (error) {
+      console.error(error);
+      return error;
+    }
+  }
+
+  async getAllImgServer() {
+    const paths = [
+      path.join(__dirname, `../../assets/clientImg`),
+      path.join(__dirname, `../../assets/upload`),
+    ];
+    paths.forEach((path) => {
+      fs.readdir(path, (error, files) => {
+        if (error) {
+          console.error("Error al leer la carpeta:", error);
+          return;
+        }
+
+        console.log(files);
+      });
+    });
+    return "Finish";
   }
 }
 

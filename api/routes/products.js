@@ -5,6 +5,8 @@ const path = require("path");
 //servcie
 const ProductService = require("../services/products");
 const service = new ProductService();
+const ImageService = require("../services/imagens");
+const img_service = new ImageService();
 
 const { uploadProduct } = require("./imagens");
 
@@ -37,7 +39,8 @@ router.get("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const deleteProcess = await service.deleteProduct(id);
-  res.send({ deleteProcess });
+  const imgStatus = deleteProcess !== "object" ? await img_service.deleteImg(deleteProcess?.img) : "";
+  res.send({ deleteProcess, imgStatus});
 });
 
 router.put("/:id", async (req, res) => {
