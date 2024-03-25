@@ -27,15 +27,20 @@ class ClientService {
         return "Datos Faltantes";
       }
 
-      data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/${photo?.filename}`;
+      data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
       return store.add(data);
     } catch (error) {
       return error;
     }
   }
 
-  async updateClient(id, data) {
+  async updateClient(id, data, photo) {
     try {
+      console.log(photo)
+      if (photo != undefined) {
+        data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
+      } 
+
       return await store.update(id, data);
     } catch (error) {
       return error;
@@ -45,7 +50,7 @@ class ClientService {
     try {
       return await store.delete(id);
     } catch (error) {
-      return error ;
+      return error;
     }
   }
 }
