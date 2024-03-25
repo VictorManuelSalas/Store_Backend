@@ -23,8 +23,7 @@ class ProductService {
         large: "Not available",
         original: `https://store-backend-3his.onrender.com/api/v1/imagen/upload/${img?.filename}`,
       };
-
-      console.log(img?.filename);
+ 
       return store.add(data);
     } catch (error) {
       return error;
@@ -58,6 +57,7 @@ class ProductService {
 
   async updateProduct(id, data) {
     try {
+     
       return await store.update(id, data);
     } catch (error) {
       return error;

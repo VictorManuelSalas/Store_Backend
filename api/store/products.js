@@ -14,7 +14,7 @@ async function getProducts() {
 }
 
 async function getProductId(id) {
-  const product = await Model.findOne({ _id: id });
+  const product = await Model.findOne({ _id: id }); 
   if (product) {
     return await product;
   } else {
@@ -38,13 +38,13 @@ async function deleteProduct(id) {
 }
 
 async function updateProduct(id, data) {
-  const updateProduct = await Model.updateOne({ _id: id }, { $set: data });
-  if (updateProduct) {
-    return updateProduct;
+  const updateProduct = await Model.updateOne({ _id: id }, { $set: data }); 
+  if (updateProduct.matchedCount > 0) {
+    return "Product updated";
   } else {
     return "Product not exist";
   }
-}
+} 
 
 module.exports = {
   add: addProduct,

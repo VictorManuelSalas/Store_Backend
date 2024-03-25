@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", uploadClient.single("photo"), async (req, res) => {
   const data = req.body;
-  const photo = req.file; 
+  const photo = req.file;
   const client = await service.addClient(data, photo);
   res.send({
     response: client._id ? `New Client Added` : "Client not added",
@@ -48,6 +48,13 @@ router.put("/:id", uploadClient.single("photo"), async (req, res) => {
   const { id } = req.params;
   const data = req.body;
   const photo = req.file;
+
+  if (photo != undefined) {
+    const client = await service.getClient(id);
+    await img_service.deleteImg(client.photo);
+    data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
+  }
+
   const updateClient = await service.updateClient(id, data, photo);
   res.send({ updateClient });
 });

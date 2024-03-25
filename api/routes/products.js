@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router(); 
+const router = express.Router();
 
 //servcie
 const ProductService = require("../services/products");
@@ -29,22 +29,42 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const product = await service.getProduct(id);
   res.send({
-    response: product.name.includes("CastError")
-      ? "Product not exist"
-      : product,
+    response: product  
   });
 });
 
 router.delete("/:id", async (req, res) => {
   const { id } = req.params;
   const deleteProcess = await service.deleteProduct(id);
-  const imgStatus = deleteProcess !== "object" ? await img_service.deleteImg(deleteProcess?.img) : "";
-  res.send({ deleteProcess, imgStatus});
+  const imgStatus =
+    deleteProcess !== "object"
+      ? await img_service.deleteImg(deleteProcess?.img)
+      : "";
+  res.send({
+    response:
+      deleteProcess !== "Product not exist" ? "Product deleted" : deleteProcess,
+    imgStatus,
+  });
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", uploadProduct.single("file"), async (req, res) => {
   const { id } = req.params;
   const data = req.body;
+  const img = req.file;
+  if (img !== undefined) {
+    const product = await service.getProduct(id);
+    if (product !== "Product not exist") {
+      await img_service.deleteImg(product.imagen.original);
+      data.imagen = {
+        small: "",
+        medium: "",
+        large: "",
+        original: `https://store-backend-3his.onrender.com/api/v1/imagen/upload/${img?.filename}`,
+      };
+    } else {
+      await img_service.deleteImg(img.filename);
+    }
+  }
   const updateProduct = await service.updateProduct(id, data);
   res.send({ updateProduct });
 });

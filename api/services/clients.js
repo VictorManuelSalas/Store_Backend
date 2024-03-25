@@ -34,13 +34,9 @@ class ClientService {
     }
   }
 
-  async updateClient(id, data, photo) {
+  async updateClient(id, data) {
     try {
-      console.log(photo)
-      if (photo != undefined) {
-        data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
-      } 
-
+     
       return await store.update(id, data);
     } catch (error) {
       return error;
