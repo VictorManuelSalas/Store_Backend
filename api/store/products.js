@@ -14,7 +14,7 @@ async function getProducts() {
 }
 
 async function getProductId(id) {
-  const product = await Model.findOne({ _id: id }); 
+  const product = await Model.findOne({ _id: id });
   if (product) {
     return await product;
   } else {
@@ -25,10 +25,10 @@ async function getProductId(id) {
 async function deleteProduct(id) {
   try {
     const product = await Model.findOne({ _id: id });
-     
+
     if (product) {
-      const process = await Model.deleteOne({ _id: id })
-      return await {process, img: product?.imagen?.original};
+      const process = await Model.deleteOne({ _id: id });
+      return await { process, img: product?.imagen?.original };
     } else {
       return "Product not exist";
     }
@@ -38,13 +38,13 @@ async function deleteProduct(id) {
 }
 
 async function updateProduct(id, data) {
-  const updateProduct = await Model.updateOne({ _id: id }, { $set: data }); 
+  const updateProduct = await Model.updateOne({ _id: id }, { $set: data });
   if (updateProduct.matchedCount > 0) {
-    return "Product updated";
+    return { message: "Product updated" };
   } else {
-    return "Product not exist";
+    return { message: "Product not exist" };
   }
-} 
+}
 
 module.exports = {
   add: addProduct,

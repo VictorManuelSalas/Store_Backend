@@ -18,16 +18,21 @@ async function getClientById(id) {
 }
 
 async function addNewClient(data) {
-  const newClient = await new Model(data);
-  return newClient.save();
+  try {
+    const newClient = await new Model(data);
+    return newClient.save();
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 async function updateClient(id, data) {
   const updateClient = await Model.updateOne({ _id: id }, { $set: data });
+
   if (updateClient.matchedCount !== 0) {
-    return "Client was updated correctly";
+    return { message: "Client was updated correctly" };
   } else {
-    return "Client not exist, verify the id";
+    return { message: "Client not exist, verify the id" };
   }
 }
 

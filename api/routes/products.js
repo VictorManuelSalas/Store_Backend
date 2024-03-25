@@ -19,17 +19,21 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", uploadProduct.single("file"), async (req, res) => {
-  const data = req.body;
-  const img = req.file;
-  const product = await service.addProduct(data, img);
-  res.send({ response: `New Product Added`, product });
+  try {
+    const data = req.body;
+    const img = req.file;
+    const product = await service.addProduct(data, img);
+    res.send({ response: `New Product Added`, product });
+  } catch (error) {
+    res.send({error: error.message });
+  }
 });
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   const product = await service.getProduct(id);
   res.send({
-    response: product  
+    response: product,
   });
 });
 
@@ -66,7 +70,7 @@ router.put("/:id", uploadProduct.single("file"), async (req, res) => {
     }
   }
   const updateProduct = await service.updateProduct(id, data);
-  res.send({ updateProduct });
+  res.send({ response: updateProduct.message });
 });
 
 module.exports = router;

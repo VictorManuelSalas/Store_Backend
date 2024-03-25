@@ -16,17 +16,7 @@ class ClientService {
   }
 
   async addClient(data, photo) {
-    try {
-      if (
-        data.name == "" ||
-        data.lastname == "" ||
-        data.email == "" ||
-        data.phone == "" ||
-        data.address == ""
-      ) {
-        return "Datos Faltantes";
-      }
-
+    try { 
       data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
       return store.add(data);
     } catch (error) {
@@ -36,7 +26,6 @@ class ClientService {
 
   async updateClient(id, data) {
     try {
-     
       return await store.update(id, data);
     } catch (error) {
       return error;

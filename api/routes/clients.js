@@ -19,13 +19,19 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", uploadClient.single("photo"), async (req, res) => {
-  const data = req.body;
-  const photo = req.file;
-  const client = await service.addClient(data, photo);
-  res.send({
-    response: client._id ? `New Client Added` : "Client not added",
-    client,
-  });
+  try {
+    const data = req.body;
+    const photo = req.file;
+    const client = await service.addClient(data, photo);
+    res.send({
+      response: client._id ? `New Client Added` : "Client not added",
+      client,
+    });
+  } catch (error) {
+    res.send({
+      error: error.message,
+    });
+  }
 });
 
 router.get("/:id", async (req, res) => {
@@ -45,18 +51,22 @@ router.delete("/:id", async (req, res) => {
 });
 
 router.put("/:id", uploadClient.single("photo"), async (req, res) => {
-  const { id } = req.params;
-  const data = req.body;
-  const photo = req.file;
+  try {
+    const { id } = req.params;
+    const data = req.body;
+    const photo = req.file;
 
-  if (photo != undefined) {
-    const client = await service.getClient(id);
-    await img_service.deleteImg(client.photo);
-    data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
+    if (photo != undefined) {
+      const client = await service.getClient(id);
+      await img_service.deleteImg(client.photo);
+      data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
+    }
+
+    const updateClient = await service.updateClient(id, data);
+    res.send({ response: updateClient.message });
+  } catch (error) {
+    res.send({ error: error.message });
   }
-
-  const updateClient = await service.updateClient(id, data, photo);
-  res.send({ updateClient });
 });
 
 module.exports = router;
