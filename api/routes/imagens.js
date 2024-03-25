@@ -24,7 +24,7 @@ router.post("/newImgClient", uploadClient.single("file"), async (req, res) => {
     const img = req.file;
     res.send({
       imgUrl: img?.filename
-        ? `https://store-backend-3his.onrender.com/api/v1/imagen/${img?.filename}`
+        ? `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${img?.filename}`
         : "Error",
     });
   } catch (error) {
@@ -43,7 +43,7 @@ router.use(
 );
 
 router.get("/", async (req, res) => {
-  const response = await service.getAllImgServer(); 
+  const response = await service.getAllImgServer();
   res.send({ response });
 });
 
@@ -58,7 +58,7 @@ router.get("/:imgName", (req, res) => {
       );
 });
 
-router.post("/", async (req, res) => {
+router.delete("/", async (req, res) => {
   const { img } = req.body;
   const response = await service.deleteImg(img);
   res.send({ response });

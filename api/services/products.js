@@ -21,9 +21,10 @@ class ProductService {
         small: "Not available", //`http://localhost:3001/api/v1/products/imagen/small-${img?.filename}`
         medium: "Not available",
         large: "Not available",
-        original: `https://store-backend-3his.onrender.com/api/v1/imagen/${img?.filename}`,
+        original: `https://store-backend-3his.onrender.com/api/v1/imagen/upload/${img?.filename}`,
       };
 
+      console.log(img?.filename);
       return store.add(data);
     } catch (error) {
       return error;
@@ -51,15 +52,15 @@ class ProductService {
     try {
       return await store.delete(id);
     } catch (error) {
-      return error ;
+      return error;
     }
   }
 
-  async updateProduct(id,data){
+  async updateProduct(id, data) {
     try {
-      return await store.update(id,data)
+      return await store.update(id, data);
     } catch (error) {
-      return error
+      return error;
     }
   }
 }
