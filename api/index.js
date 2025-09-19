@@ -1,22 +1,35 @@
 const express = require("express");
 const cors = require("cors");
+const ipRangeCheck = require("ip-range-check");
 
 const routerApi = require("./routes");
 const config = require("../config/config");
 const app = express();
 
-// Lista de IPs permitidas
-const allowedIps = ["123.45.67.89", "98.76.54.32", "127.0.0.1"];
+const allowedCidrs = [
+  "136.143.160.0/19",
+  "135.84.80.0/22",
+  "165.173.128.0/18",
+  "204.141.32.0/23",
+  "204.141.42.0/23",
+  "65.154.166.0/24",
+];
 
-// Middleware para validar IP
+// Middleware para validar IPs
 app.use((req, res, next) => {
-  const clientIp =
-    req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  console.log("IP Request => " ,clientIp);
-  if (allowedIps.includes(clientIp)) {
+  // Toma la IP real (si hay proxy usa x-forwarded-for)
+  let clientIp = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+  // Normaliza IPs tipo "::ffff:127.0.0.1"
+  if (clientIp.startsWith("::ffff:")) {
+    clientIp = clientIp.replace("::ffff:", "");
+  }
+
+  if (ipRangeCheck(clientIp, allowedCidrs)) {
     next();
   } else {
-    res.status(403).json({ message: "Access denied: IP not allowed" });
+    console.warn(`🚫 Bloqueada petición desde IP no permitida: ${clientIp}`);
+    return res.status(403).json({ message: "Access denied: IP not allowed" });
   }
 });
 
