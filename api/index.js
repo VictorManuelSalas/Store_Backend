@@ -17,18 +17,24 @@ const allowedCidrs = [
 
 // Middleware para validar IPs
 app.use((req, res, next) => {
-  // Toma la IP real (si hay proxy usa x-forwarded-for)
   let clientIp = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const originalIps = clientIp; // Guardamos todas las IPs originales
 
-  // Normaliza IPs tipo "::ffff:127.0.0.1"
+  // Si trae varias IPs separadas por coma, tomamos la primera (la del cliente real)
+  if (clientIp.includes(",")) {
+    clientIp = clientIp.split(",")[0].trim();
+  }
+
+  // Normaliza "::ffff:IP"
   if (clientIp.startsWith("::ffff:")) {
     clientIp = clientIp.replace("::ffff:", "");
   }
 
   if (ipRangeCheck(clientIp, allowedCidrs)) {
+    console.log(`✅ Petición permitida desde IP: ${clientIp} | Cadena completa: ${originalIps}`);
     next();
   } else {
-    console.warn(`🚫 Bloqueada petición desde IP no permitida: ${clientIp}`);
+    console.warn(`🚫 Bloqueada petición desde IP: ${clientIp} | Cadena completa: ${originalIps}`);
     return res.status(403).json({ message: "Access denied: IP not allowed" });
   }
 });
