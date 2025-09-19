@@ -1,5 +1,5 @@
 const store = require("../store/clients");
-
+const { production } = require("../../config/config");
 class ClientService {
   constructor() {}
 
@@ -16,8 +16,10 @@ class ClientService {
   }
 
   async addClient(data, photo) {
-    try { 
-      data.photo = `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`;
+    try {
+      data.photo = production == 'true'
+        ? `https://store-backend-3his.onrender.com/api/v1/imagen/clientImg/${photo?.filename}`
+        : `http://localhost:3001/api/v1/imagen/clientImg/${photo?.filename}`;
       return store.add(data);
     } catch (error) {
       return error;
